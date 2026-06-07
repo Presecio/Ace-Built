@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACE BUILT — Building & Construction Melbourne</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0a0a; --white: #f5f3ee; --gold: #c9a84c; --gold-light: #e8c96a;
+  --dark: #111111; --mid: #161616; --text: #e8e4dc; --muted: #777;
+  --pad: clamp(1.25rem, 5vw, 4rem);
+}
+html { scroll-behavior: smooth; }
+body { font-family: "Outfit", sans-serif; background: var(--black); color: var(--text); overflow-x: hidden; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  padding: 1rem var(--pad);
+  background: rgba(10,10,10,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+.nav-logo svg { width: 44px; height: 44px; flex-shrink: 0; }
+.nav-wordmark { font-family: "Bebas Neue", sans-serif; font-size: 1.25rem; letter-spacing: 0.08em; color: var(--white); line-height: 1; }
+.nav-wordmark span { color: var(--gold); display: block; font-size: 0.6rem; letter-spacing: 0.22em; font-family: "Outfit", sans-serif; font-weight: 400; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.3s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-cta { background: var(--gold); color: var(--black); padding: 0.6rem 1.5rem; border-radius: 2px; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background 0.3s; }
+.nav-cta:hover { background: var(--gold-light); }
+
+.hero { min-height: 100svh; display: flex; align-items: center; position: relative; overflow: hidden; padding: clamp(7rem,15vw,10rem) var(--pad) 4rem; }
+.hero-bg { position: absolute; inset: 0; background: var(--black); }
+.hero-grid { position: absolute; inset: 0; opacity: 0.03; background-image: repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(201,168,76,0.6) 60px), repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(201,168,76,0.6) 60px); }
+.hero-photo { position: absolute; right: 0; top: 0; bottom: 0; width: 55%; background: url("IMG_1381.jpg") center/cover no-repeat; }
+.hero-photo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, var(--black) 0%, rgba(10,10,10,0.75) 45%, rgba(10,10,10,0.2) 100%); }
+.hero-content { position: relative; z-index: 2; max-width: 600px; width: 100%; }
+.hero-badge { display: inline-flex; align-items: center; gap: 0.6rem; border: 1px solid rgba(201,168,76,0.5); color: var(--gold); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; padding: 0.4rem 1rem; margin-bottom: 1.8rem; border-radius: 2px; }
+.hero-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+h1 { font-family: "Bebas Neue", sans-serif; font-size: clamp(3.5rem, 10vw, 8rem); line-height: 0.92; letter-spacing: 0.02em; color: var(--white); margin-bottom: 1.2rem; }
+h1 .gold { color: var(--gold); }
+.hero-sub { font-size: clamp(0.95rem, 2.5vw, 1.1rem); color: #999; line-height: 1.75; margin-bottom: 2.5rem; max-width: 480px; font-weight: 300; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+.btn-gold { background: var(--gold); color: var(--black); padding: 0.9rem 2rem; border: none; border-radius: 2px; font-family: "Outfit", sans-serif; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.3s, transform 0.2s; }
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-ghost { border: 1px solid rgba(201,168,76,0.35); color: var(--text); padding: 0.9rem 2rem; border-radius: 2px; font-size: 0.88rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.3s, color 0.3s; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.hero-stats { display: flex; gap: clamp(1.5rem, 5vw, 3.5rem); border-top: 1px solid rgba(201,168,76,0.15); padding-top: 2rem; flex-wrap: wrap; }
+.stat-num { font-family: "Bebas Neue", sans-serif; font-size: clamp(2rem, 5vw, 2.8rem); color: var(--gold); line-height: 1; }
+.stat-lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; }
+
+section { padding: clamp(4rem, 8vw, 7rem) var(--pad); }
+.tag { display: inline-block; color: var(--gold); font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; margin-bottom: 0.8rem; }
+h2.sec { font-family: "Bebas Neue", sans-serif; font-size: clamp(2.4rem, 6vw, 4.5rem); color: var(--white); line-height: 0.95; margin-bottom: 1.5rem; letter-spacing: 0.02em; }
+
+#why { background: var(--mid); }
+.why-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+.why-intro-text { max-width: 500px; color: #888; font-size: 1rem; line-height: 1.75; font-weight: 300; }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(201,168,76,0.1); }
+.why-card { padding: 2.2rem 1.8rem; border-right: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1); transition: background 0.4s; }
+.why-card:nth-child(3n) { border-right: none; }
+.why-card:nth-last-child(-n+3) { border-bottom: none; }
+.why-card:hover { background: rgba(201,168,76,0.04); }
+.why-num { font-family: "Bebas Neue", sans-serif; font-size: 2.8rem; color: rgba(201,168,76,0.12); line-height: 1; margin-bottom: 0.4rem; }
+.why-card h3 { font-family: "Bebas Neue", sans-serif; font-size: 1.4rem; color: var(--white); margin-bottom: 0.6rem; letter-spacing: 0.03em; }
+.why-card p { color: #777; font-size: 0.9rem; line-height: 1.65; font-weight: 300; }
+
+/* GALLERY — strict 4x2 equal grid */
+#gallery { background: var(--black); }
+.gallery-header { margin-bottom: 2.5rem; }
+.gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 260px; gap: 6px; }
+.g-item { position: relative; overflow: hidden; cursor: pointer; }
+.g-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
+.g-item:hover img { transform: scale(1.06); }
+.g-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 55%); opacity: 0; transition: opacity 0.4s; }
+.g-item:hover .g-overlay { opacity: 1; }
+.g-label { position: absolute; bottom: 1rem; left: 1rem; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; opacity: 0; transition: opacity 0.4s; font-weight: 500; }
+.g-item:hover .g-label { opacity: 1; }
+.gallery-cta { margin-top: 2rem; text-align: center; }
+.gallery-cta p { color: var(--muted); font-size: 0.88rem; margin-bottom: 1rem; }
+
+/* SERVICES */
+#services { background: var(--mid); }
+.services-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.services-intro { max-width: 480px; color: #888; font-size: 1rem; line-height: 1.75; font-weight: 300; }
+.services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.1); }
+.svc-card { background: var(--mid); padding: 2rem 1.5rem; transition: background 0.3s; }
+.svc-card:hover { background: #1d1d1d; }
+.svc-icon { font-size: 1.8rem; margin-bottom: 0.9rem; display: block; }
+.svc-card h3 { font-family: "Bebas Neue", sans-serif; font-size: 1.3rem; color: var(--white); margin-bottom: 0.6rem; letter-spacing: 0.03em; }
+.svc-card p { color: #777; font-size: 0.88rem; line-height: 1.6; font-weight: 300; }
+.svc-tag { display: inline-block; margin-top: 1rem; font-size: 0.68rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; border-bottom: 1px solid rgba(201,168,76,0.3); padding-bottom: 2px; text-decoration: none; transition: border-color 0.2s, color 0.2s; cursor: pointer; }
+.svc-tag:hover { color: var(--gold-light); border-color: rgba(201,168,76,0.7); }
+
+/* REVIEWS */
+#reviews { background: #0d0d0d; padding: clamp(4rem,8vw,7rem) 0; }
+.reviews-inner { padding: 0 var(--pad); margin-bottom: 3rem; }
+.track-wrap { overflow: hidden; position: relative; }
+.track-wrap::before, .track-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2; pointer-events: none; }
+.track-wrap::before { left: 0; background: linear-gradient(to right, #0d0d0d, transparent); }
+.track-wrap::after { right: 0; background: linear-gradient(to left, #0d0d0d, transparent); }
+.track { display: flex; gap: 1.25rem; animation: scroll 38s linear infinite; width: max-content; }
+.track:hover { animation-play-state: paused; }
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.r-card { width: 320px; flex-shrink: 0; background: #141414; border: 1px solid rgba(201,168,76,0.1); border-radius: 3px; padding: 1.8rem; transition: border-color 0.3s; }
+.r-card:hover { border-color: rgba(201,168,76,0.3); }
+.r-stars { color: var(--gold); font-size: 0.88rem; letter-spacing: 3px; margin-bottom: 1rem; }
+.r-text { font-size: 0.92rem; color: #aaa; line-height: 1.7; margin-bottom: 1.3rem; font-style: italic; font-weight: 300; }
+.r-author { display: flex; align-items: center; gap: 0.8rem; }
+.r-av { width: 36px; height: 36px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; color: var(--gold); flex-shrink: 0; }
+.r-name { font-size: 0.86rem; font-weight: 500; color: var(--white); }
+.r-loc { font-size: 0.73rem; color: var(--muted); margin-top: 0.1rem; }
+
+/* AREAS */
+#areas { background: var(--black); }
+.areas-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.areas-intro { max-width: 480px; color: #888; line-height: 1.7; font-weight: 300; font-size: 1rem; }
+.areas-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid rgba(201,168,76,0.1); }
+.area-item { padding: 1.2rem 1.4rem; border-right: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1); display: flex; align-items: center; gap: 0.7rem; transition: background 0.3s; }
+.area-item:nth-child(4n) { border-right: none; }
+.area-item:nth-last-child(-n+4) { border-bottom: none; }
+.area-item:hover { background: rgba(201,168,76,0.04); }
+.a-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.a-name { font-size: 0.88rem; color: #ccc; }
+
+/* QUOTE */
+#quote { background: var(--mid); position: relative; overflow: hidden; }
+#quote::before { content: ""; position: absolute; right: -200px; top: -200px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 65%); pointer-events: none; }
+.quote-wrap { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
+.q-left p { color: #888; line-height: 1.75; margin-bottom: 2rem; font-weight: 300; font-size: 1rem; }
+.q-perks { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2.5rem; }
+.q-perks li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: #aaa; }
+.q-check { width: 20px; height: 20px; border-radius: 50%; background: rgba(201,168,76,0.1); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 0.68rem; flex-shrink: 0; border: 1px solid rgba(201,168,76,0.25); }
+.q-contact { padding: 1.4rem 1.6rem; border: 1px solid rgba(201,168,76,0.2); border-radius: 3px; background: rgba(201,168,76,0.04); }
+.q-contact .lbl { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.35rem; }
+.q-contact .phone { font-family: "Bebas Neue", sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 0.05em; line-height: 1; }
+.q-contact .email { font-size: 0.85rem; color: #888; margin-top: 0.25rem; }
+.q-form { display: flex; flex-direction: column; gap: 0.9rem; }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.f-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.f-field label { font-size: 0.7rem; color: #666; letter-spacing: 0.12em; text-transform: uppercase; }
+.f-field input, .f-field select, .f-field textarea { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.18); border-radius: 2px; padding: 0.75rem 0.9rem; color: var(--text); font-family: "Outfit", sans-serif; font-size: 0.92rem; transition: border-color 0.3s; outline: none; width: 100%; -webkit-appearance: none; appearance: none; }
+.f-field input::placeholder, .f-field textarea::placeholder { color: #444; }
+.f-field input:focus, .f-field select:focus, .f-field textarea:focus { border-color: var(--gold); }
+.f-field select { cursor: pointer; }
+.f-field select option { background: #1a1a1a; color: var(--text); }
+.f-field textarea { resize: vertical; min-height: 100px; }
+.f-submit { background: var(--gold); color: var(--black); padding: 1rem; border: none; border-radius: 2px; font-family: "Outfit", sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, transform 0.2s; margin-top: 0.4rem; width: 100%; }
+.f-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+.success-box { display: none; background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); border-radius: 4px; padding: 2rem; text-align: center; color: var(--gold); font-size: 1rem; line-height: 1.6; }
+
+footer { background: #050505; padding: 2rem var(--pad); border-top: 1px solid rgba(201,168,76,0.1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.f-copy { font-size: 0.76rem; color: #555; }
+.f-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+.f-links a { font-size: 0.82rem; color: var(--gold); text-decoration: none; }
+.f-links a:hover { color: var(--gold-light); }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero-photo { width: 100%; opacity: 0.15; }
+  .hero-photo::before { background: linear-gradient(to bottom, var(--black) 0%, rgba(10,10,10,0.4) 100%); }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 190px; }
+  .why-grid { grid-template-columns: 1fr; }
+  .why-card { border-right: none !important; }
+  .why-card:nth-last-child(-n+3) { border-bottom: 1px solid rgba(201,168,76,0.1) !important; }
+  .why-card:last-child { border-bottom: none !important; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .areas-grid { grid-template-columns: repeat(2, 1fr); }
+  .area-item:nth-child(4n) { border-right: 1px solid rgba(201,168,76,0.1) !important; }
+  .area-item:nth-child(2n) { border-right: none !important; }
+  .area-item:nth-last-child(-n+4) { border-bottom: 1px solid rgba(201,168,76,0.1) !important; }
+  .area-item:nth-last-child(-n+2) { border-bottom: none !important; }
+  .quote-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+  .f-row { grid-template-columns: 1fr; }
+  .why-header, .services-header, .areas-header { flex-direction: column; align-items: flex-start; }
+  footer { flex-direction: column; text-align: center; }
+  .f-links { justify-content: center; }
+}
+@media (max-width: 480px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-auto-rows: 160px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <svg viewBox="0 0 60 56" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="8,46 22,12 36,46" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linejoin="round"/>
+      <line x1="14" y1="36" x2="30" y2="36" stroke="#c9a84c" stroke-width="2.5"/>
+      <text x="40" y="27" fill="#f5f3ee" font-size="14" font-weight="900" font-family="Bebas Neue,sans-serif" letter-spacing="1">CE</text>
+      <text x="40" y="44" fill="#c9a84c" font-size="14" font-weight="900" font-family="Bebas Neue,sans-serif" letter-spacing="1">BUILT</text>
+    </svg>
+    <div class="nav-wordmark">ACE BUILT<span>Building &amp; Construction</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#areas">Areas</a></li>
+  </ul>
+  <a class="nav-cta" href="#quote">Free Quote</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-photo"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Melbourne's Premium Builder</div>
+    <h1>BUILD<br><span class="gold">BETTER.</span><br>LIVE BOLD.</h1>
+    <p class="hero-sub">From stunning bathroom renovations to full home builds — ACE BUILT delivers craftsmanship that stands the test of time across Melbourne, Sunbury, and the Macedon Ranges.</p>
+    <div class="hero-btns">
+      <a class="btn-gold" href="#quote">Get a Free Quote</a>
+      <a class="btn-ghost" href="#gallery">View Our Work</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">100+</div><div class="stat-lbl">Projects Complete</div></div>
+      <div><div class="stat-num">10+</div><div class="stat-lbl">Years Experience</div></div>
+      <div><div class="stat-num">5&#9733;</div><div class="stat-lbl">Client Rating</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="why">
+  <div class="why-header">
+    <div><div class="tag">Why Choose Us</div><h2 class="sec">NOT JUST<br>BUILDERS.</h2></div>
+    <p class="why-intro-text">We treat every project like it's our own home. From day one to handover, you work directly with our team — no subcontractor runaround, no hidden costs, no shortcuts.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-num">01</div><h3>On Time, Every Time</h3><p>Strict project timelines backed by transparent scheduling. We respect your time and stick to deadlines — rare in this industry, standard at ACE BUILT.</p></div>
+    <div class="why-card"><div class="why-num">02</div><h3>Premium Craftsmanship</h3><p>Every finish, tile, and fixture installed to the highest standard. We don't cut corners — we build legacies that add lasting value to your home.</p></div>
+    <div class="why-card"><div class="why-num">03</div><h3>Direct Communication</h3><p>You'll always speak to the builder, not a call centre. Transparent updates, honest advice, and real accountability throughout your entire build.</p></div>
+    <div class="why-card"><div class="why-num">04</div><h3>Fixed Price Certainty</h3><p>No nasty surprises. Our quotes are detailed and fixed so you know exactly what you're getting — and what it costs — before we lift a tool.</p></div>
+    <div class="why-card"><div class="why-num">05</div><h3>Design-Led Thinking</h3><p>We bring ideas to the table, not just a tool belt. Our team understands modern aesthetics and helps you create spaces that look incredible.</p></div>
+    <div class="why-card"><div class="why-num">06</div><h3>Local &amp; Trusted</h3><p>Based in Sunbury, we're your neighbours. We care deeply about our community — every project we complete is a reference for the next.</p></div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="tag">Our Work</div>
+    <h2 class="sec">THE PROOF IS<br>IN THE BUILD.</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-item"><img src="IMG_1381.jpg" alt="Bathroom renovation by ACE BUILT"><div class="g-overlay"></div><div class="g-label">Bathroom Reno</div></div>
+    <div class="g-item"><img src="IMG_1377.jpg" alt="Ensuite bathroom by ACE BUILT"><div class="g-overlay"></div><div class="g-label">Ensuite Reno</div></div>
+    <div class="g-item"><img src="IMG_1373.jpg" alt="White kitchen by ACE BUILT"><div class="g-overlay"></div><div class="g-label">Kitchen Reno</div></div>
+    <div class="g-item"><img src="IMG_1378.jpg" alt="Dark designer kitchen by ACE BUILT"><div class="g-overlay"></div><div class="g-label">Designer Kitchen</div></div>
+    <div class="g-item"><img src="IMG_1379.jpg" alt="Alfresco deck by ACE BUILT"><div class="g-overlay"></div><div class="g-label">Alfresco &amp; Decking</div></div>
+    <div class="g-item"><img src="IMG_1380.jpg" alt="Entry door and joinery by ACE BUILT"><div class="g-overlay"></div><div class="g-label">Entry &amp; Joinery</div></div>
+    <div class="g-item"><img src="IMG_1375.jpg" alt="Pool surround by ACE BUILT"><div class="g-overlay"></div><div class="g-label">Pool &amp; Outdoor</div></div>
+    <div class="g-item"><img src="IMG_1376.jpg" alt="Timber facade by ACE BUILT"><div class="g-overlay"></div><div class="g-label">Facade &amp; Deck</div></div>
+  </div>
+  <div class="gallery-cta">
+    <p>See more completed projects on Facebook</p>
+    <a class="btn-ghost" href="https://www.facebook.com/acebuilt" target="_blank" rel="noopener">View Full Portfolio &rarr;</a>
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-header">
+    <div><div class="tag">What We Do</div><h2 class="sec">OUR<br>SERVICES.</h2></div>
+    <p class="services-intro">Whether you're renovating a single room or building from the ground up, ACE BUILT has the skills and experience to deliver a result you'll love.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card"><span class="svc-icon">&#128703;</span><h3>Bathroom Renovations</h3><p>Full wet area renovations including tiling, waterproofing, vanities, mirrors, plumbing fit-off, and custom joinery end-to-end.</p><a class="svc-tag" href="#quote">Most Popular</a></div>
+    <div class="svc-card"><span class="svc-icon">&#127859;</span><h3>Kitchen Renovations</h3><p>Bench tops, cabinetry, splashbacks, and appliance fit-off — kitchens that are as functional as they are stunning.</p><a class="svc-tag" href="#quote">Get a Quote</a></div>
+    <div class="svc-card"><span class="svc-icon">&#127968;</span><h3>Home Extensions</h3><p>Extend your living space with a professionally managed addition. Framing, cladding, insulation, and internal finishes.</p><a class="svc-tag" href="#quote">Get a Quote</a></div>
+    <div class="svc-card"><span class="svc-icon">&#127807;</span><h3>Alfresco &amp; Decking</h3><p>Covered alfresco areas, composite decking, timber decks and outdoor entertaining spaces built to last and designed to impress.</p><a class="svc-tag" href="#quote">Get a Quote</a></div>
+    <div class="svc-card"><span class="svc-icon">&#127959;</span><h3>New Home Builds</h3><p>Full residential builds from slab to handover. We work with your plans or connect you with our design partners.</p><a class="svc-tag" href="#quote">Get a Quote</a></div>
+    <div class="svc-card"><span class="svc-icon">&#129683;</span><h3>Carpentry &amp; Joinery</h3><p>Custom cabinetry, feature walls, doors, framing, and all things timber. Quality carpentry is the backbone of everything we do.</p><a class="svc-tag" href="#quote">Get a Quote</a></div>
+    <div class="svc-card"><span class="svc-icon">&#128704;</span><h3>Pool Surrounds</h3><p>Stone and tile pool surrounds, glass fencing, and outdoor landscaping to turn your backyard into a resort-style retreat.</p><a class="svc-tag" href="#quote">Get a Quote</a></div>
+    <div class="svc-card"><span class="svc-icon">&#128295;</span><h3>Repairs &amp; Maintenance</h3><p>No job too small. From fixing faults to refreshing tired spaces, our team delivers reliable, quality repairs across all trades.</p><a class="svc-tag" href="#quote">Get a Quote</a></div>
+  </div>
+</section>
+
+<section id="reviews" style="padding-left:0;padding-right:0;">
+  <div class="reviews-inner">
+    <div class="tag">Client Reviews</div>
+    <h2 class="sec">WHAT OUR CLIENTS<br>ARE SAYING.</h2>
+  </div>
+  <div class="track-wrap">
+    <div class="track">
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"ACE BUILT transformed our bathroom completely — the skylight, tiles, everything. It's like living in a 5-star hotel every single day."</p><div class="r-author"><div class="r-av">SL</div><div><div class="r-name">Sarah L.</div><div class="r-loc">Sunbury, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"The kitchen renovation exceeded every expectation. Professional, clean, always on time. Our home feels completely transformed."</p><div class="r-author"><div class="r-av">MT</div><div><div class="r-name">Marcus T.</div><div class="r-loc">Macedon, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"From first quote to handover — fantastic. No surprises, no drama. Just exceptional work. Would recommend to absolutely anyone."</p><div class="r-author"><div class="r-av">JR</div><div><div class="r-name">Jessica R.</div><div class="r-loc">Gisborne, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"The alfresco deck is stunning. Managed perfectly and finished ahead of schedule. Couldn't be happier with the result."</p><div class="r-author"><div class="r-av">DK</div><div><div class="r-name">David K.</div><div class="r-loc">Romsey, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"Pool surround and landscaping came out better than we imagined. Great team, great comms, great result. Absolute legends."</p><div class="r-author"><div class="r-av">AP</div><div><div class="r-name">Amy P.</div><div class="r-loc">Diggers Rest, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"Best building experience we've ever had. Quality workmanship throughout and the final result speaks for itself. 10/10."</p><div class="r-author"><div class="r-av">BN</div><div><div class="r-name">Ben N.</div><div class="r-loc">Riddells Creek, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"The timber deck looks incredible. Rich finish, perfectly level, done in days. All our neighbours keep asking who did it!"</p><div class="r-author"><div class="r-av">CW</div><div><div class="r-name">Craig W.</div><div class="r-loc">Sunbury, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"ACE BUILT transformed our bathroom completely — the skylight, tiles, everything. It's like living in a 5-star hotel every single day."</p><div class="r-author"><div class="r-av">SL</div><div><div class="r-name">Sarah L.</div><div class="r-loc">Sunbury, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"The kitchen renovation exceeded every expectation. Professional, clean, always on time. Our home feels completely transformed."</p><div class="r-author"><div class="r-av">MT</div><div><div class="r-name">Marcus T.</div><div class="r-loc">Macedon, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"From first quote to handover — fantastic. No surprises, no drama. Just exceptional work. Would recommend to absolutely anyone."</p><div class="r-author"><div class="r-av">JR</div><div><div class="r-name">Jessica R.</div><div class="r-loc">Gisborne, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"The alfresco deck is stunning. Managed perfectly and finished ahead of schedule. Couldn't be happier with the result."</p><div class="r-author"><div class="r-av">DK</div><div><div class="r-name">David K.</div><div class="r-loc">Romsey, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"Pool surround and landscaping came out better than we imagined. Great team, great comms, great result. Absolute legends."</p><div class="r-author"><div class="r-av">AP</div><div><div class="r-name">Amy P.</div><div class="r-loc">Diggers Rest, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"Best building experience we've ever had. Quality workmanship throughout and the final result speaks for itself. 10/10."</p><div class="r-author"><div class="r-av">BN</div><div><div class="r-name">Ben N.</div><div class="r-loc">Riddells Creek, VIC</div></div></div></div>
+      <div class="r-card"><div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="r-text">"The timber deck looks incredible. Rich finish, perfectly level, done in days. All our neighbours keep asking who did it!"</p><div class="r-author"><div class="r-av">CW</div><div><div class="r-name">Craig W.</div><div class="r-loc">Sunbury, VIC</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="areas">
+  <div class="areas-header">
+    <div><div class="tag">Where We Build</div><h2 class="sec">SERVICING<br>YOUR AREA.</h2></div>
+    <p class="areas-intro">We proudly service Melbourne's north-western growth corridor and the beautiful Macedon Ranges. No matter where you are, ACE BUILT is your local builder.</p>
+  </div>
+  <div class="areas-grid">
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Sunbury</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Macedon</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Gisborne</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Romsey</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Diggers Rest</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Riddells Creek</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Woodend</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Kyneton</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Melton</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Tullamarine</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Essendon</span></div>
+    <div class="area-item"><div class="a-dot"></div><span class="a-name">Melbourne Wide</span></div>
+  </div>
+</section>
+
+<section id="quote">
+  <div class="tag">Get Started</div>
+  <h2 class="sec" style="margin-bottom:3rem;">FREE QUOTE &mdash;<br>NO OBLIGATION.</h2>
+  <div class="quote-wrap">
+    <div class="q-left">
+      <p>Ready to build something exceptional? Tell us about your project and we'll get back to you within 24 hours with a detailed, no-obligation quote tailored to your needs.</p>
+      <ul class="q-perks">
+        <li><div class="q-check">&#10003;</div>Response within 24 hours</li>
+        <li><div class="q-check">&#10003;</div>Detailed written quote</li>
+        <li><div class="q-check">&#10003;</div>No hidden costs &mdash; ever</li>
+        <li><div class="q-check">&#10003;</div>Fixed price contracts available</li>
+        <li><div class="q-check">&#10003;</div>Licensed &amp; fully insured</li>
+        <li><div class="q-check">&#10003;</div>Free on-site consultation</li>
+      </ul>
+      <div class="q-contact">
+        <div class="lbl">Call Us Directly</div>
+        <div class="phone">0422 327 678</div>
+        <div class="email">admin@acebuilt.co</div>
+      </div>
+    </div>
+    <div>
+      <div class="q-form" id="qForm">
+        <div class="f-row">
+          <div class="f-field"><label>First Name</label><input type="text" id="fn" placeholder="John"></div>
+          <div class="f-field"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+        </div>
+        <div class="f-row">
+          <div class="f-field"><label>Phone Number</label><input type="tel" id="ph" placeholder="04XX XXX XXX"></div>
+          <div class="f-field"><label>Email Address</label><input type="email" id="em" placeholder="john@email.com"></div>
+        </div>
+        <div class="f-field">
+          <label>Project Type</label>
+          <select><option value="" disabled selected>Select a service...</option><option>Bathroom Renovation</option><option>Kitchen Renovation</option><option>Home Extension</option><option>New Home Build</option><option>Alfresco &amp; Decking</option><option>Pool Surrounds</option><option>General Carpentry</option><option>Other</option></select>
+        </div>
+        <div class="f-row">
+          <div class="f-field"><label>Suburb</label><input type="text" placeholder="e.g. Sunbury"></div>
+          <div class="f-field"><label>Approx. Budget</label>
+            <select><option value="" disabled selected>Select range...</option><option>Under $10,000</option><option>$10,000 &ndash; $30,000</option><option>$30,000 &ndash; $80,000</option><option>$80,000 &ndash; $200,000</option><option>$200,000+</option></select>
+          </div>
+        </div>
+        <div class="f-field"><label>Tell Us About Your Project</label><textarea placeholder="Brief description of the work you need done..."></textarea></div>
+        <button class="f-submit" onclick="submitForm()">Send My Free Quote Request &rarr;</button>
+      </div>
+      <div class="success-box" id="successBox">
+        <div style="font-size:2rem;margin-bottom:1rem;">&#127959;</div>
+        <strong style="font-size:1.1rem;display:block;margin-bottom:0.5rem;">Thanks &mdash; we'll be in touch!</strong>
+        We've received your enquiry and will respond within 24 hours.<br>
+        In the meantime, call us on <strong>0422 327 678</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-copy">&copy; 2025 ACE BUILT Building &amp; Construction Pty Ltd. Sunbury, VIC, Australia.</div>
+  <div class="f-links">
+    <a href="tel:0422327678">0422 327 678</a>
+    <a href="mailto:admin@acebuilt.co">admin@acebuilt.co</a>
+    <a href="https://www.facebook.com/acebuilt" target="_blank" rel="noopener">Facebook</a>
+  </div>
+</footer>
+
+<script>
+function submitForm() {
+  var fn = document.getElementById("fn").value.trim();
+  var ph = document.getElementById("ph").value.trim();
+  var em = document.getElementById("em").value.trim();
+  if (!fn || !ph || !em) { alert("Please fill in your name, phone number, and email address."); return; }
+  document.getElementById("qForm").style.display = "none";
+  document.getElementById("successBox").style.display = "block";
+}
+</script>
+</body>
+</html>
